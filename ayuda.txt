@@ -1,0 +1,37 @@
+RENOMBRADOR DE MANGA Y GENERADOR DE CBR
+
+==================================================
+OBJETIVO
+==================================================
+
+Esta aplicación renombra automáticamente las imágenes
+contenidas en las subcarpetas de un manga y genera
+un archivo CBR listo para leer en lectores de cómics.
+
+==================================================
+PASOS DE USO
+==================================================
+
+1. Seleccione una carpeta.
+
+2. Compruebe el árbol de capítulos.
+
+3. Pulse "Renombrar y generar CBR".
+
+4. Espere a que finalice el proceso.
+
+==================================================
+RENOMBRADO
+==================================================
+
+Las imágenes se renombran como:
+
+Capítulo 01 - 00.png
+Capítulo 01 - 01.png
+Capítulo 01 - 02.png
+
+==================================================
+GENERACIÓN DEL CBR
+==================================================
+
+Se genera un ZIP y posteriormente se renombra a CBR.

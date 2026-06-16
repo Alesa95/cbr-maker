@@ -2,19 +2,19 @@
 Add-Type -AssemblyName System.Drawing
 
 
-#FORMULARIO
+# FORMULARIO
 
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "Renombrador Manga"
 $form.Size = New-Object System.Drawing.Size(900,650)
 $form.StartPosition = "CenterScreen"
 
-#Variable global
+# Variable global
 
 $script = $null
 
 
-#LABEL CARPETA
+# LABEL CARPETA
 
 $lblCarpeta = New-Object System.Windows.Forms.Label
 $lblCarpeta.Location = New-Object System.Drawing.Point(10,15)
@@ -23,7 +23,7 @@ $lblCarpeta.Text = "No se ha seleccionado ninguna carpeta"
 $form.Controls.Add($lblCarpeta)
 
 
-#BOTÓN SELECCIONAR
+# BOTÓN SELECCIONAR
 
 $btnSeleccionar = New-Object System.Windows.Forms.Button
 $btnSeleccionar.Location = New-Object System.Drawing.Point(730,10)
@@ -32,7 +32,7 @@ $btnSeleccionar.Text = "Seleccionar carpeta"
 $form.Controls.Add($btnSeleccionar)
 
 
-#TREEVIEW
+# TREEVIEW
 
 $tree = New-Object System.Windows.Forms.TreeView
 $tree.Location = New-Object System.Drawing.Point(10,50)
@@ -131,8 +131,87 @@ if ($dialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
 
 })
 
+# =========================
+# BOTÓN AYUDA
+# =========================
+$btnAyuda = New-Object System.Windows.Forms.Button
+$btnAyuda.Location = New-Object System.Drawing.Point(230,565)
+$btnAyuda.Size = New-Object System.Drawing.Size(120,40)
+$btnAyuda.Text = "Ayuda"
+$form.Controls.Add($btnAyuda)
 
-#EJECUTAR PROCESO
+$btnAyuda.Add_Click({
+
+    # Ventana de ayuda
+    $helpForm = New-Object System.Windows.Forms.Form
+    $helpForm.Text = "Ayuda"
+    $helpForm.Size = New-Object System.Drawing.Size(700,550)
+    $helpForm.StartPosition = "CenterParent"
+    $helpForm.FormBorderStyle = "FixedDialog"
+    $helpForm.MaximizeBox = $false
+    $helpForm.MinimizeBox = $false
+
+    # Caja de texto
+    $txtHelp = New-Object System.Windows.Forms.TextBox
+    $txtHelp.Location = New-Object System.Drawing.Point(10,10)
+    $txtHelp.Size = New-Object System.Drawing.Size(660,450)
+    $txtHelp.Multiline = $true
+    $txtHelp.ScrollBars = "Vertical"
+    $txtHelp.ReadOnly = $true
+    $txtHelp.Font = New-Object System.Drawing.Font("Consolas",10)
+
+
+# ARCHIVO DE AYUDA
+
+$archivoAyuda = Join-Path $PSScriptRoot "ayuda.txt"
+
+try {
+
+    if (Test-Path $archivoAyuda) {
+        $txtHelp.Text = Get-Content $archivoAyuda -Raw -Encoding UTF8
+    }
+    else {
+        $txtHelp.Text = @"
+No se encontró el archivo de ayuda.
+
+Ruta esperada:
+
+$archivoAyuda
+"@
+    }
+
+}
+catch {
+
+    $txtHelp.Text = @"
+Error al abrir el archivo de ayuda.
+
+$($_.Exception.Message)
+"@
+}
+
+# FIN BUSQUEDA ARCHIVO AYUDA
+
+    $helpForm.Controls.Add($txtHelp)
+
+    # Botón cerrar
+    $btnCerrar = New-Object System.Windows.Forms.Button
+    $btnCerrar.Text = "Cerrar"
+    $btnCerrar.Size = New-Object System.Drawing.Size(100,35)
+    $btnCerrar.Location = New-Object System.Drawing.Point(570,470)
+
+    $btnCerrar.Add_Click({
+        $helpForm.Close()
+    })
+
+    $helpForm.Controls.Add($btnCerrar)
+
+    $helpForm.ShowDialog()
+
+})
+
+
+# EJECUTAR PROCESO
 
 
 $btnRenombrar.Add_Click({
